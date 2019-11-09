@@ -1,0 +1,4 @@
+name: App/Run
+debug: true
+files:
+  - name: src/run.ahk
