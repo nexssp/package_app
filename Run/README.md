@@ -1,10 +1,18 @@
 # App/Run - Nexss PROGRAMMER 2.0
 
-Run application.
+Run application/program
 
-## To add new files please use command below. The templates list will be displayed.
+## Examples
 
 ```sh
 nexss App/Run --app="code c:/myfolder"
 nexss App/Run --app="explorer"
 ```
+
+## Credits
+
+Languages/Technologies used for this Nexss PROGRAMMER package:
+
+- NodeJS
+- AutoHotKey
+- <https://github.com/cocobelgica/AutoHotkey-JSON>
