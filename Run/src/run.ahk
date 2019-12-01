@@ -4,7 +4,7 @@
 #NoEnv 
 #Warn
 SendMode Input
-SetWorkingDir %A_ScriptDir% 
+; SetWorkingDir %A_ScriptDir% 
 #Include 3rdPartyLibraries/AutoHotkey-JSON/JSON.ahk
 ; STDIN
 STDIN := FileOpen("*", "r")
@@ -14,6 +14,8 @@ NexssStdout := JSON.load(NexssStdin)
 ; Modify Data
 
 if(NexssStdout.app){
+    CWD :=NexssStdout.cwd
+    SetWorkingDir %CWD% ; Change to current working directory
     Program :=NexssStdout.app
     Runwait, %comspec% /c %Program%,,max
 } else {
