@@ -7,6 +7,11 @@ $program, $attrs = $inFieldValue_1
 
 $NULL, $installApps = $attrs
 
+Set-Location $NexssStdout.cwd
+
+$currentLocation = Get-Location
+nxsInfo("$currentLocation")
+
 & $program @attrs 
 
 if ( $inFieldValue_1) {  

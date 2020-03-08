@@ -1,3 +1,3 @@
 name: App/Run
 files:
-  - name: src/run.ps1
+  - name: src/run.js

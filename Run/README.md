@@ -2,7 +2,7 @@
 
 Run application/program
 
-# Examples (run.ps1)
+# Examples (run.js OR run.ps1)
 
 ```sh
 nexss App/Run blender
