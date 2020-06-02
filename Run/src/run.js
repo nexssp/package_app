@@ -12,13 +12,27 @@ let NexssStdout = NexssIn();
 //   }
 process.chdir(NexssStdout.cwd);
 
+if (!NexssStdout.nxsIn) {
+  nxsError(
+    "You need to pass at least application name to run eg. nexss App/Run explorer.exe"
+  );
+  process.exit(1);
+}
 try {
   require("child_process").execSync(NexssStdout.nxsIn.join(" "), {
     cwd: NexssStdout.cwd,
     stdio: "inherit"
   });
 } catch (er) {
-  nxsError(er);
+  // explorer.exe shows error, even if is ok so we don't display it
+  if (
+    !NexssStdout.nxsIn
+      .join(" ")
+      .trim()
+      .toLowerCase()
+      .startsWith("explorer")
+  )
+    nxsError(er);
   //   process.exit();
 }
 delete NexssStdout.nxsIn;
