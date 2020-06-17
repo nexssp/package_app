@@ -1,3 +1,6 @@
 name: App/Run
 files:
   - name: src/run.js
+commands:
+  - name: init
+    command: npm install
