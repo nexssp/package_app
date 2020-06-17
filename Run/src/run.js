@@ -1,6 +1,6 @@
 // Nexss PROGRAMMER 2.0.0 - App/Run
 const {
-  nxsError
+  nxsError,
 } = require(`${process.env.NEXSS_PACKAGES_PATH}/Nexss/Lib/NexssLog.js`);
 
 const NexssIn = require(`${process.env.NEXSS_PACKAGES_PATH}/Nexss/Lib/NexssIn.js`);
@@ -12,27 +12,20 @@ let NexssStdout = NexssIn();
 //   }
 process.chdir(NexssStdout.cwd);
 
-if (!NexssStdout.nxsIn) {
+if (!NexssStdout.app) {
   nxsError(
-    "You need to pass at least application name to run eg. nexss App/Run explorer.exe"
+    "You need to pass at least application name to run eg. nexss App/Run --app=explorer.exe OR nexss App/Run --app='code .'"
   );
   process.exit(1);
 }
 try {
-  require("child_process").execSync(NexssStdout.nxsIn.join(" "), {
+  require("child_process").execSync(NexssStdout.app, {
     cwd: NexssStdout.cwd,
-    stdio: "inherit"
+    stdio: "inherit",
   });
 } catch (er) {
   // explorer.exe shows error, even if is ok so we don't display it
-  if (
-    !NexssStdout.nxsIn
-      .join(" ")
-      .trim()
-      .toLowerCase()
-      .startsWith("explorer")
-  )
-    nxsError(er);
+  if (!NexssStdout.app.startsWith("explorer")) nxsError(er);
   //   process.exit();
 }
 delete NexssStdout.nxsIn;
