@@ -12,20 +12,26 @@ let NexssStdout = NexssIn();
 //   }
 process.chdir(NexssStdout.cwd);
 
-if (!NexssStdout.app) {
+if (!NexssStdout._app) {
   nxsError(
-    "You need to pass at least application name to run eg. nexss App/Run --app=explorer.exe OR nexss App/Run --app='code .'"
+    "You need to pass at least application name to run eg. nexss App/Run --_app=explorer.exe OR nexss App/Run --_app='code .'"
   );
   process.exit(1);
 }
+
 try {
-  require("child_process").execSync(NexssStdout.app, {
-    cwd: NexssStdout.cwd,
-    stdio: "inherit",
-  });
+  const result = require("child_process")
+    .execSync(NexssStdout._app, {
+      cwd: NexssStdout.cwd,
+      shell: process.platform === "win32" ? true : "/bin/bash",
+    })
+    .toString();
+
+  NexssStdout.nxsOut = result;
 } catch (er) {
+  // nxsError(er);
   // explorer.exe shows error, even if is ok so we don't display it
-  if (!NexssStdout.app.startsWith("explorer")) nxsError(er);
+  if (!NexssStdout._app.startsWith("explorer")) nxsError(er);
   //   process.exit();
 }
 delete NexssStdout.nxsIn;
