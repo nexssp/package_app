@@ -1,6 +1,7 @@
 // Nexss PROGRAMMER 2.0.0 - App/Run
 const {
   nxsError,
+  nxsInfo,
 } = require(`${process.env.NEXSS_PACKAGES_PATH}/Nexss/Lib/NexssLog.js`);
 
 const NexssIn = require(`${process.env.NEXSS_PACKAGES_PATH}/Nexss/Lib/NexssIn.js`);
@@ -10,7 +11,8 @@ let NexssStdout = NexssIn();
 //   if (NexssStdout.nxsOutAs) {
 //     fieldOut = NexssStdout.nxsOutAs;
 //   }
-process.chdir(NexssStdout.cwd);
+const cwd = NexssStdout.__dirname || NexssStdout.cwd;
+process.chdir(cwd);
 
 if (!NexssStdout._app) {
   nxsError(
@@ -19,10 +21,15 @@ if (!NexssStdout._app) {
   process.exit(1);
 }
 
+const message = NexssStdout.nxsIn.join(" ");
+if (message) {
+  nxsInfo(message);
+}
+
 try {
   const result = require("child_process")
     .execSync(NexssStdout._app, {
-      cwd: NexssStdout.cwd,
+      cwd,
       shell: process.platform === "win32" ? true : "/bin/bash",
     })
     .toString();
